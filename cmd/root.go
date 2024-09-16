@@ -17,7 +17,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 package cmd
 
 import (
-	"fmt"
 	"log"
 	"math/rand"
 	"os"
@@ -25,7 +24,6 @@ import (
 
 	"github.com/jmbit/ctad/playback"
 	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
 )
 
 var cfgFile string
@@ -72,39 +70,13 @@ func Execute() {
 }
 
 func init() {
-	cobra.OnInitialize(initConfig)
 	log.SetOutput(os.Stderr)
 
 	// Here you will define your flags and configuration settings.
 	// Cobra supports persistent flags, which, if defined here,
 	// will be global for your application.
 
-	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $XDG_CONFIG_HOME/ctad.toml)")
 	rootCmd.PersistentFlags().StringVarP(&soundDir, "sounds", "s", "", "directory to use for sound files")
   rootCmd.PersistentFlags().IntVarP(&maxDelay, "max-delay", "m", 500, "Maximum delay between noises")
   rootCmd.PersistentFlags().IntVarP(&minDelay, "min-delay", "i", 30, "Maximum delay between noises")
-}
-
-// initConfig reads in config file and ENV variables if set.
-func initConfig() {
-	if cfgFile != "" {
-		// Use config file from the flag.
-		viper.SetConfigFile(cfgFile)
-	} else {
-		// Find home directory.
-		home, err := os.UserConfigDir()
-		cobra.CheckErr(err)
-
-		// Search config in home directory with name ".ctad" (without extension).
-		viper.AddConfigPath(home)
-		viper.SetConfigType("toml")
-		viper.SetConfigName("ctad")
-	}
-
-	viper.AutomaticEnv() // read in environment variables that match
-
-	// If a config file is found, read it in.
-	if err := viper.ReadInConfig(); err == nil {
-		fmt.Fprintln(os.Stderr, "Using config file:", viper.ConfigFileUsed())
-	}
 }
