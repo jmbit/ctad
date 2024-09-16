@@ -1,4 +1,4 @@
-build: deps sounds
+ctad: deps sounds
 	go build -x -o ctad .
 
 run:

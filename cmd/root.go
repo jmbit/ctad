@@ -38,8 +38,11 @@ var rootCmd = &cobra.Command{
 	Use:   "ctad",
 	Short: "Randomly plays cat sounds",
 	Long: `Program that lets your computer meow (or play any other noise, really), in a random interval
-  the delay set is in Seconds. Sound files have to be mp3 and all in a single directory. 3 cat sounds
-  are already embedded`,
+  the delay set is in Seconds. 
+  Sound files have to be mp3 and all in a single directory, 3 cat sounds are already embedded
+  Example:
+    ctad --max-delay 60 --min-delay 10 -s ./sounds/
+  plays mp3 files from ./sounds every 10-30s`,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	Run: func(cmd *cobra.Command, args []string) {
@@ -76,7 +79,7 @@ func init() {
 	// Cobra supports persistent flags, which, if defined here,
 	// will be global for your application.
 
-	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.ctad.yaml)")
+	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $XDG_CONFIG_HOME/ctad.toml)")
 	rootCmd.PersistentFlags().StringVarP(&soundDir, "sounds", "s", "", "directory to use for sound files")
   rootCmd.PersistentFlags().IntVarP(&maxDelay, "max-delay", "m", 500, "Maximum delay between noises")
   rootCmd.PersistentFlags().IntVarP(&minDelay, "min-delay", "i", 30, "Maximum delay between noises")

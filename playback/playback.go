@@ -44,11 +44,13 @@ func PlayRandomSound(dir string) {
     }
 
 	} else {
-		file, err := os.Open(path.Join("dir",files[randNum].Name()))
+		file, err := os.Open(path.Join(dir,files[randNum].Name()))
 		if err != nil {
 			log.Println("Error opening file ", files[randNum].Name(), err)
       return
-		}
+		} else {
+      log.Println("Playing", path.Join(dir,files[randNum].Name()))
+    }
     streamer, format, err = mp3.Decode(file)
     if err != nil {
       log.Println("Could not parse file ", files[randNum].Name(), err)
